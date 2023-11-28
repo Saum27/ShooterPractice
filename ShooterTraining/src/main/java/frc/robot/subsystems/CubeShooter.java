@@ -1,18 +1,30 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.CubeShooterConstants;
 
-public class CubeShooter {
+public class CubeShooter extends SubsystemBase {
 
     private static CubeShooter instance;
-    private static CANSparkMax leftMotor = new CANSparkMax(CubeShooterConstants.leftMotorCANID, MotorType.kBrushless);
-    private static CANSparkMax rightMotor = new CANSparkMax(CubeShooterConstants.rightMotorCANID, MotorType.kBrushless);
+    private static CANSparkMax feederMotor = new CANSparkMax(CubeShooterConstants.feederMotorCANID, MotorType.kBrushless);
+    private static CANSparkMax shooterMotor = new CANSparkMax(CubeShooterConstants.shooterMotorCANID, MotorType.kBrushless);
 
     private CubeShooter() {
+        feederMotor.restoreFactoryDefaults();
+        shooterMotor.restoreFactoryDefaults();
 
+        feederMotor.setIdleMode(IdleMode.kCoast);
+        shooterMotor.setIdleMode(IdleMode.kCoast);
+
+        feederMotor.setInverted(CubeShooterConstants.isFeederMotorInverted);
+        shooterMotor.setInverted(CubeShooterConstants.isShooterMotorInverted);
+
+        feederMotor.burnFlash();
+        shooterMotor.burnFlash();
     }
 
     public static CubeShooter getInstance() {
@@ -20,5 +32,13 @@ public class CubeShooter {
             instance = new CubeShooter();
         }
         return instance;
+    }
+
+    public static void runFeeder(double speed) {
+        feederMotor.set(speed);
+    }
+
+    public static void runShooter(double speed) {
+        shooterMotor.set(speed);
     }
 }
