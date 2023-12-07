@@ -9,10 +9,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.CubeShooterConstants;
 
 public class CubeShooter extends SubsystemBase {
-
+    // TODO: make safeguards for methods | some other things | ????????
     private static CubeShooter instance;
+
     private static CANSparkMax feederMotor = new CANSparkMax(CubeShooterConstants.feederMotorCANID, MotorType.kBrushless);
     private static CANSparkMax shooterMotor = new CANSparkMax(CubeShooterConstants.shooterMotorCANID, MotorType.kBrushless);
+    private RelativeEncoder feederEncoder = feederMotor.getEncoder();
+    private RelativeEncoder shooterEncoder = feederMotor.getEncoder();
 
     private CubeShooter() {
         feederMotor.restoreFactoryDefaults();
@@ -21,8 +24,8 @@ public class CubeShooter extends SubsystemBase {
         feederMotor.setIdleMode(IdleMode.kCoast);
         shooterMotor.setIdleMode(IdleMode.kCoast);
 
-        feederMotor.setInverted(CubeShooterConstants.isFeederMotorInverted);
-        shooterMotor.setInverted(CubeShooterConstants.isShooterMotorInverted);
+        feederMotor.setInverted(CubeShooterConstants.kIsFeederMotorInverted);
+        shooterMotor.setInverted(CubeShooterConstants.kIsShooterMotorInverted);
 
         feederMotor.burnFlash();
         shooterMotor.burnFlash();
@@ -35,11 +38,23 @@ public class CubeShooter extends SubsystemBase {
         return instance;
     }
 
-    public static void runFeeder(double speed) {
-        feederMotor.set(speed);
+    public static void feederAcquire() {
+        feederMotor.set(CubeShooterConstants.kFeederSpeed);
     }
 
-    public static void runShooter(double speed) {
-        shooterMotor.set(speed);
+    public static void feederEject() {
+        feederMotor.set(-CubeShooterConstants.kFeederSpeed);
+    }
+
+    public static void runShooter() {
+        shooterMotor.set(CubeShooterConstants.kShooterSpeed);
+    }
+
+    public static void stopFeeder() {
+        feederMotor.stopMotor();
+    }
+
+    public static void stopShooter(double speed) {
+        shooterMotor.stopMotor();
     }
 }

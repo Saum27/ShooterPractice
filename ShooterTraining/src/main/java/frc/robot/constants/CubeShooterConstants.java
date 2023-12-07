@@ -1,9 +1,14 @@
 package frc.robot.constants;
 
 public class CubeShooterConstants {
-    public final static int feederMotorCANID = 0;
-    public final static int shooterMotorCANID = 0;
+    // TODO: finish with actual values rather than placeholders
+    public final static int feederMotorCANID = -1;
+    public final static int shooterMotorCANID = -1;
 
-    public final static boolean isFeederMotorInverted = false;
-    public final static boolean isShooterMotorInverted = false;
+    public final static boolean kIsFeederMotorInverted = false;
+    public final static boolean kIsShooterMotorInverted = false;
+
+    public final static double kShooterSpeed = 0.0;
+    public final static double kFeederSpeed = 0.0;
+    
 }
