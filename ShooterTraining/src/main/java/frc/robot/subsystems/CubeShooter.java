@@ -9,30 +9,31 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.CubeShooterConstants;
 
 public class CubeShooter extends SubsystemBase {
-    // TODO: make safeguards for methods | some other things | ????????
+
     private static CubeShooter instance;
 
-    private static CANSparkMax feederMotor = new CANSparkMax(CubeShooterConstants.feederMotorCANID, MotorType.kBrushless);
-    private static CANSparkMax shooterMotor = new CANSparkMax(CubeShooterConstants.shooterMotorCANID, MotorType.kBrushless);
-    private RelativeEncoder feederEncoder = feederMotor.getEncoder();
+    private static CANSparkMax feederMotor = new CANSparkMax(CubeShooterConstants.kFeederMotorCANID,
+            MotorType.kBrushless);
+    private static CANSparkMax shooterMotor = new CANSparkMax(CubeShooterConstants.kShooterMotorCANID,
+            MotorType.kBrushless);
     private RelativeEncoder shooterEncoder = feederMotor.getEncoder();
 
     private CubeShooter() {
         feederMotor.restoreFactoryDefaults();
         shooterMotor.restoreFactoryDefaults();
 
-        feederMotor.setIdleMode(IdleMode.kCoast);
+        feederMotor.setIdleMode(IdleMode.kBrake);
         shooterMotor.setIdleMode(IdleMode.kCoast);
 
-        feederMotor.setInverted(CubeShooterConstants.kIsFeederMotorInverted);
-        shooterMotor.setInverted(CubeShooterConstants.kIsShooterMotorInverted);
+        feederMotor.setInverted(CubeShooterConstants.kFeederMotorInverted);
+        shooterMotor.setInverted(CubeShooterConstants.kShooterMotorInverted);
 
         feederMotor.burnFlash();
         shooterMotor.burnFlash();
     }
 
     public static CubeShooter getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new CubeShooter();
         }
         return instance;
@@ -46,7 +47,7 @@ public class CubeShooter extends SubsystemBase {
         feederMotor.set(-CubeShooterConstants.kFeederSpeed);
     }
 
-    public static void runShooter() {
+    public static void shooterRun() {
         shooterMotor.set(CubeShooterConstants.kShooterSpeed);
     }
 
@@ -54,7 +55,7 @@ public class CubeShooter extends SubsystemBase {
         feederMotor.stopMotor();
     }
 
-    public static void stopShooter(double speed) {
+    public static void stopShooter() {
         shooterMotor.stopMotor();
     }
 }
