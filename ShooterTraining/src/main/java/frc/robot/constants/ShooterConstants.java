@@ -1,6 +1,6 @@
 package frc.robot.constants;
 
-public class CubeShooterConstants {
+public class ShooterConstants {
     // TODO: finish with actual values rather than placeholders
     public final static int kFeederMotorCANID = -1;
     public final static int kShooterMotorCANID = -1;
@@ -11,4 +11,5 @@ public class CubeShooterConstants {
     public final static double kShooterSpeed = 0.0;
     public final static double kFeederSpeed = 0.0;
 
+    
 }
